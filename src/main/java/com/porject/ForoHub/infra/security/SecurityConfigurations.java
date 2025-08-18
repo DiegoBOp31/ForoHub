@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -73,6 +75,21 @@ public class SecurityConfigurations {
          * Esto es útil cuando necesitas autenticar usuarios manualmente (por ejemplo, en un servicio que genera JWTs).
          */
         return configuration.getAuthenticationManager();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        /**
+         * Este método define un bean de tipo PasswordEncoder, que es la interfaz estándar
+         * que usa Spring Security para codificar (hashear) y verificar contraseñas de forma segura.
+         *
+         * Al devolver una instancia de BCryptPasswordEncoder, le estás diciendo a Spring
+         * que use el algoritmo BCrypt para codificar las contraseñas.
+         *
+         * Al declarar este bean, puedes inyectarlo en cualquier parte de tu aplicación usando @Autowired,
+         * y Spring lo usará automáticamente cuando se necesite un PasswordEncoder, como en la autenticación de usuarios.
+         */
+        return new BCryptPasswordEncoder();
     }
 
 }
