@@ -3,6 +3,7 @@ package com.porject.ForoHub.infra.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.porject.ForoHub.domain.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -50,5 +51,31 @@ public class TokenService {
          * Instant se usa comúnmente en APIs que manejan tiempos exactos, como la expiración de JWTs u otros tokens.
          */
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-06:00"));
+    }
+
+    public String getSubject(String tokenJWT) {
+        /**
+         * Este método recibe un token JWT como parámetro y devuelve el "subject",
+         * que normalmente representa el identificador del usuario (como su email o ID).
+         * Si el token es inválido o ha expirado, lanza una excepción.
+         */
+        try {
+            /**
+             * Crea un algoritmo de verificación usando HMAC256 con la clave secreta definida en la variable 'secret'.
+             * Este algoritmo se usó también para firmar el token originalmente.
+             */
+            var algoritmo = Algorithm.HMAC256(secret);
+            /**
+             * Verifica el token JWT usando el algoritmo.
+             * También valida que el token haya sido emitido por "API Voll.med".
+             */
+            return JWT.require(algoritmo)// Establece el algoritmo con el que se firmó el token
+                    .withIssuer("API Foro.hub")// Valida que el emisor del token sea el correcto
+                    .build()// Construye el verificador
+                    .verify(tokenJWT)// Verifica el token JWT recibido
+                    .getSubject();// Extrae y devuelve el "subject" del token (el usuario)
+        } catch (JWTVerificationException exception) {
+            throw new RuntimeException("Token JWT invalido o expirado");
+        }
     }
 }
