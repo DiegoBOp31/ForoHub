@@ -25,4 +25,13 @@ public class Topico {
     private Boolean status;
     private String autor;
     private String curso;
+
+    public Topico(DatosRegistroTopico datos) {
+        this.titulo = datos.titulo();
+        this.mensaje = datos.mensaje();
+        this.fechaCreacion = LocalDateTime.now(); //aquí se asigna automáticamente la fecha
+        this.status = datos.status();
+        this.autor = datos.autor();
+        this.curso = datos.nombreCurso();
+    }
 }

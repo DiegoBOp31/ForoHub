@@ -1,6 +1,7 @@
 package com.porject.ForoHub.controller;
 
 import com.porject.ForoHub.domain.topico.DatosRegistroTopico;
+import com.porject.ForoHub.domain.topico.Topico;
 import com.porject.ForoHub.domain.topico.TopicoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class TopicoController {
 
     @Transactional
     @PostMapping
-    public void registrar(@RequestBody DatosRegistroTopico datos){
+    public void registrar(@RequestBody @Valid DatosRegistroTopico datos){
         /**
          * @RequestBody sirve para indicar que el parametro que estamos recibiendo en el metodo es parte especificamente
          * del body de la request. Y no la demas informacion que no necesitamos
