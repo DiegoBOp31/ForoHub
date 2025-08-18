@@ -1,6 +1,9 @@
 package com.porject.ForoHub.controller;
 
 import com.porject.ForoHub.domain.usuario.DatosAutenticacion;
+import com.porject.ForoHub.domain.usuario.Usuario;
+import com.porject.ForoHub.infra.security.DatosTokenJWT;
+import com.porject.ForoHub.infra.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AutenticacionController {
 
     @Autowired
+    private TokenService tokenService;
+
+    @Autowired
     private AuthenticationManager manager;
 
     @PostMapping
@@ -26,7 +32,7 @@ public class AutenticacionController {
         //Para que después el autenticator manager pueda reconocerlo aquí, y llama a nuestro AutenticacionService
         var autenticacion = manager.authenticate(authenticationToken);
 
-        //esto todavia no va: var tokenJWT = tokenService.generarToken((Usuario) autenticacion.getPrincipal());
+        var tokenJWT = tokenService.generarToken((Usuario) autenticacion.getPrincipal());
         /**
          * Esta línea construye una respuesta HTTP 200 OK y como cuerpo devuelve un token JWT generado por el servicio tokenService.
          * Se llama al método generarToken(), pasando como argumento el usuario autenticado,
@@ -34,8 +40,7 @@ public class AutenticacionController {
          * Esto funciona porque durante el proceso de autenticación, Spring Security guarda los datos del usuario autenticado
          * dentro del objeto Authentication, y getPrincipal() devuelve el objeto UserDetails (en este caso, tu clase Usuario).
          */
-        return ResponseEntity.ok().build();
-                //Esto todavía no va: .ok(new DatosTokenJWT(tokenJWT));
+        return ResponseEntity.ok(new DatosTokenJWT(tokenJWT));
     }
 
 }
