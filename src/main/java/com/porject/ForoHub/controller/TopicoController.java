@@ -1,7 +1,9 @@
 package com.porject.ForoHub.controller;
 
 import com.porject.ForoHub.domain.topico.DatosRegistroTopico;
+import com.porject.ForoHub.domain.topico.TopicoRepository;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @RequestMapping("/topicos")
 public class TopicoController {
+
+    @Autowired
+    private TopicoRepository repository;
 
     @Transactional
     @PostMapping

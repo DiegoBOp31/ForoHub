@@ -23,5 +23,6 @@ public class Topico {
     private String mensaje;
     private LocalDateTime fechaCreacion;
     private Boolean status;
+    private String autor;
     private String curso;
 }
