@@ -3,6 +3,8 @@ package com.porject.ForoHub.infra.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -60,6 +62,17 @@ public class SecurityConfigurations {
 //                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 // build() finaliza la configuración y construye el SecurityFilterChain.
                 .build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        /**
+         * Define un bean de tipo AuthenticationManager, que es el componente principal
+         * encargado de manejar la autenticación en Spring Security.
+         * Se obtiene desde la configuración automática de Spring Security.
+         * Esto es útil cuando necesitas autenticar usuarios manualmente (por ejemplo, en un servicio que genera JWTs).
+         */
+        return configuration.getAuthenticationManager();
     }
 
 }
