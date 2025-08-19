@@ -28,6 +28,7 @@ public class TopicoController {
          * del body de la request. Y no la demas informacion que no necesitamos
          */
         System.out.println(datos);
+        //repository.save(new Topico(datos));
 //        var topico = new Topico(datos);
 //        repository.save(topico);
     }
