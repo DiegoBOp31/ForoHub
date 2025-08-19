@@ -1,9 +1,6 @@
 package com.porject.ForoHub.controller;
 
-import com.porject.ForoHub.domain.topico.DatosListaTopico;
-import com.porject.ForoHub.domain.topico.DatosRegistroTopico;
-import com.porject.ForoHub.domain.topico.Topico;
-import com.porject.ForoHub.domain.topico.TopicoRepository;
+import com.porject.ForoHub.domain.topico.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,5 +36,12 @@ public class TopicoController {
     @GetMapping
     public Page<DatosListaTopico> listarTopicos(@PageableDefault(size=10,sort={"titulo"}) Pageable paginacion){
         return repository.findAll(paginacion).map(DatosListaTopico::new);
+    }
+
+    @Transactional
+    @PutMapping
+    public void actualizarTopico(@RequestBody @Valid DatosActualizacionTopico datos){
+        var topico = repository.getReferenceById(datos.id());
+        topico.actualizarInformacion(datos);
     }
 }
