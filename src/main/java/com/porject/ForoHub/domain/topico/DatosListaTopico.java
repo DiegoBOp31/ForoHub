@@ -13,7 +13,7 @@ public record DatosListaTopico(
             topico.getId(),
             topico.getTitulo(),
             topico.getMensaje(),
-            topico.getFechaCreacion()
+            topico.getFecha()
         );
     }
 }

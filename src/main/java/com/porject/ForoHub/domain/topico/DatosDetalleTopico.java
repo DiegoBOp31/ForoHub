@@ -16,10 +16,10 @@ public record DatosDetalleTopico(
                 topico.getId(),
                 topico.getTitulo(),
                 topico.getMensaje(),
-                topico.getFechaCreacion(),
+                topico.getFecha(),
                 topico.getStatus(),
                 topico.getAutor(),
-                topico.getNombreCurso()
+                topico.getCurso()
         );
     }
 }

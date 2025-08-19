@@ -22,19 +22,19 @@ public class Topico {
     private Long id;
     private String titulo;
     private String mensaje;
-    private LocalDateTime fechaCreacion;
+    private LocalDateTime fecha;
     private Boolean status;
     private String autor;
-    private String nombreCurso;
+    private String curso;
 
     public Topico(DatosRegistroTopico datos) {
         this.id = null;
         this.titulo = datos.titulo();
         this.mensaje = datos.mensaje();
-        this.fechaCreacion = LocalDateTime.now(); //aquí se asigna automáticamente la fecha
+        this.fecha = LocalDateTime.now(); //aquí se asigna automáticamente la fecha
         this.status = true;
         this.autor = datos.autor();
-        this.nombreCurso = datos.nombreCurso();
+        this.curso = datos.nombreCurso();
     }
 
     public void actualizarInformacion(@Valid DatosActualizacionTopico datos) {
