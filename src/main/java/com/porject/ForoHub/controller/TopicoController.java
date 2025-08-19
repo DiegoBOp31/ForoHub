@@ -35,7 +35,7 @@ public class TopicoController {
 
     @GetMapping
     public Page<DatosListaTopico> listarTopicos(@PageableDefault(size=10,sort={"titulo"}) Pageable paginacion){
-        return repository.findAll(paginacion).map(DatosListaTopico::new);
+        return repository.findAllByStatusTrue(paginacion).map(DatosListaTopico::new);
     }
 
     @Transactional
@@ -43,5 +43,12 @@ public class TopicoController {
     public void actualizarTopico(@RequestBody @Valid DatosActualizacionTopico datos){
         var topico = repository.getReferenceById(datos.id());
         topico.actualizarInformacion(datos);
+    }
+
+    @Transactional
+    @DeleteMapping("/{id}")
+    public void desactivarTopico(@PathVariable Long id){
+        var topico = repository.getReferenceById(id);
+        topico.eliminar();
     }
 }
