@@ -73,4 +73,10 @@ public class TopicoController {
         topico.eliminar();
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity obtenerUnTopico(@PathVariable Long id){
+        var topico = repository.getReferenceById(id);
+        return ResponseEntity.ok(new DatosDetalleTopico(topico));
+    }
 }
